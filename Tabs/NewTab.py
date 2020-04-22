@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QPushButton, QWidget
 
-from Katana import UI4, NodegraphAPI
+if __name__ is not '__main__':
+    from Katana import UI4, NodegraphAPI
 
-
-class NewTab(UI4.Tabs.BaseTab):
+class NewTab(QWidget):
+#class NewTab(UI4.Tabs.BaseTab):
     def __init__(self, parent=None):
         super(NewTab, self).__init__(parent)
         layout = QVBoxLayout(self)
@@ -16,5 +17,14 @@ class NewTab(UI4.Tabs.BaseTab):
     def buttonFun(self):
         NodegraphAPI.CreateNode("Group", NodegraphAPI.GetRootNode())
 
+if __name__ == '__main__':
+    import sys
+    from PyQt5.QtWidgets import QApplication
 
-PluginRegistry = [("KatanaPanel", 2, "NewTab", NewTab)]
+    app = QApplication(sys.argv)
+    w = NewTab()
+    w.show()
+    sys.exit(app.exec_())
+else:
+    from Katana import UI4, NodegraphAPI
+    PluginRegistry = [("KatanaPanel", 2, "NewTab", NewTab)]
