@@ -32,9 +32,13 @@ menu.setMinimumWidth(400)
 
 # ---------------------------------------------------------- display and position
 # show menu
+
 menu.popup(QtGui.QCursor.pos())
 # move menu to center of cursor
+
 menu.move(
     menu.pos().x() - (menu.width() * .5),
     menu.pos().y() - (menu.height() * .5)
 )
+
+
