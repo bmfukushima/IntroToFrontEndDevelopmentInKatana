@@ -1,5 +1,38 @@
 from Katana import Callbacks
 
+import logging
+
+
+def createGSV(**kwargs):
+    import os
+
+    import NodegraphAPI
+    #os.environ['SHOTLIST'] = '010;020;030;040;050'
+    #os.environ['SHOTLIST'] = 'a;b;c;d;e'
+    #export SHOTLIST='010;020;030;040;050'
+    options = os.environ['SHOTLIST'].split(';')
+
+    # get GSV group param
+    gsv_parm = NodegraphAPI.GetRootNode().getParameter('variables')
+
+    # delete the GSV if it exists
+    try:
+        gsv_parm.deleteChild(gsv_parm.getChild('shot'))
+    except TypeError:
+        # exception for if the child does not exist
+        pass
+    # create GSV
+    shot_gsv = gsv_parm.createChildGroup('shot')
+
+    # set param flag to enabled
+    shot_gsv.createChildNumber('enable', 1)
+
+    # create GSV options
+    shot_gsv.createChildString('value', options[0])
+    optionsParam = shot_gsv.createChildStringArray('options', len(options))
+    for optionParam, optionValue in zip(optionsParam.getChildren(), options):
+            optionParam.setValue(optionValue, 0)
+
 
 def createMenuItem(**kwargs):
     # create file browser
@@ -56,4 +89,6 @@ def createMenuItem(**kwargs):
     fileMenu.addAction(action)
 
 
+Callbacks.addCallback(Callbacks.Type.onStartupComplete, createGSV)
+Callbacks.addCallback(Callbacks.Type.onSceneLoad, createGSV)
 Callbacks.addCallback(Callbacks.Type.onStartupComplete, createMenuItem)
