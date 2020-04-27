@@ -23,6 +23,7 @@ class ImageBrowser(QtWidgets.QListWidget):
 
         # setup contact sheet size attributes
         self._image_size = 100
+        self._spacing = 10
         self._image_dir = '/opt/katana/3.5v2/bin/python/UI4/Resources/Icons'
 
         # set widget to wrap
@@ -31,23 +32,43 @@ class ImageBrowser(QtWidgets.QListWidget):
         self.setWrapping(True)
 
         # set image size
-        self.setGridSize(QtCore.QSize(self._image_size, self._image_size))
-        self.setSpacing(50)
+        self.setGridSize(QtCore.QSize(
+            self._image_size + self._spacing, self._image_size + self._spacing)
+        )
+
+        # enable multi selection
+        self.setSelectionMode(QtWidgets.QListView.MultiSelection)
 
         # populate
         self.populate()
 
     def populate(self):
+        # get a list of all the files absolute file path in this directory
         image_list = ['/'.join([self._image_dir, image]) for image in os.listdir(self._image_dir)]
+
+        # run through absolute file paths and create a thumbail
         for image in image_list:
+            # create base item
             item = QtWidgets.QListWidgetItem()
             image_widget = QtGui.QImage(image)
-            if image_widget.width() > image_widget.height():
-                image_widget = image_widget.scaledToWidth(self._image_size, QtCore.Qt.FastTransformation)
-            else:
-                image_widget = image_widget.scaledToHeight(self._image_size, QtCore.Qt.FastTransformation)
-            item.setData(QtCore.Qt.DecorationRole, image_widget)
-            self.addItem(item)
+            if not image_widget.isNull():
+                # check width/height and scale to fit our bound
+                if image_widget.width() > image_widget.height():
+                    image_widget = image_widget.scaledToWidth(self._image_size, QtCore.Qt.FastTransformation)
+                else:
+                    image_widget = image_widget.scaledToHeight(self._image_size, QtCore.Qt.FastTransformation)
+
+                # set display data
+                item.setData(QtCore.Qt.DecorationRole, image_widget)
+
+                # set file path
+                # we store it on the ToolTipRole as the QImage does not store the
+                # absolute path to the file.  So we will need this in order to recall
+                # the file path later.
+                item.setData(QtCore.Qt.ToolTipRole, image)
+
+                # add item to the widget
+                self.addItem(item)
 
 
 if __name__ == '__main__':
