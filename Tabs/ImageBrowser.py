@@ -23,8 +23,9 @@ class ImageBrowser(QtWidgets.QListWidget):
 
         # setup contact sheet size attributes
         self._image_size = 100
-        self._spacing = 10
+        self._spacing = 50
         self._image_dir = '/opt/katana/3.5v2/bin/python/UI4/Resources/Icons'
+
 
         # set widget to wrap
         self.setFlow(QtWidgets.QListView.LeftToRight)
@@ -35,9 +36,6 @@ class ImageBrowser(QtWidgets.QListWidget):
         self.setGridSize(QtCore.QSize(
             self._image_size + self._spacing, self._image_size + self._spacing)
         )
-
-        # enable multi selection
-        self.setSelectionMode(QtWidgets.QListView.MultiSelection)
 
         # populate
         self.populate()
