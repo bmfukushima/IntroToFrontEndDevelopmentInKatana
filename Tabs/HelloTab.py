@@ -21,4 +21,6 @@ class HelloTab(UI4.Tabs.BaseTab):
 
 
 # Register plugin
-PluginRegistry = [("KatanaPanel", 2, "ImageBrowser", HelloTab)]
+
+
+PluginRegistry = [("KatanaPanel", 2, "HelloTab", HelloTab)]
