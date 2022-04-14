@@ -1,11 +1,12 @@
-# Copyright (c) 2012 The Foundry Visionmongers Ltd. All Rights Reserved.
 
 import Katana
-import v1 as Test
+from .Node import TestNode
 
-if Test:
-    PluginRegistry = [
-        ("SuperTool", 2, "Test",
-                (Test.TestNode,
-                        Test.GetEditor)),
-    ]
+
+def GetEditor():
+    from .Editor import TestEditor
+    return TestEditor
+
+
+# Register Supertool
+PluginRegistry = [("SuperTool", 2, "Test", (TestNode, GetEditor)), ]

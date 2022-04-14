@@ -1,5 +1,3 @@
-# Copyright (c) 2012 The Foundry Visionmongers Ltd. All Rights Reserved.
-
 from Katana import NodegraphAPI, Utils, UniqueName, DrawingModule
 
 
@@ -20,3 +18,6 @@ class TestNode(NodegraphAPI.SuperTool):
         self.addOutputPort('out')
         self.addInputPort('in')
         self.getSendPort('in').connect(self.getReturnPort('out'))
+
+        # create custom parameter
+        self.getParameters().createChildNumber("customParam", 0)

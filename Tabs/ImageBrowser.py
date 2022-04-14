@@ -24,7 +24,8 @@ class ImageBrowser(QtWidgets.QListWidget):
         # setup contact sheet size attributes
         self._image_size = 100
         self._spacing = 50
-        self._image_dir = '/opt/katana/3.5v2/bin/python/UI4/Resources/Icons'
+        katana_root = os.environ["KATANA_ROOT"]
+        self._image_dir = f'{katana_root}/bin/python/UI4/Resources/Icons'
 
 
         # set widget to wrap

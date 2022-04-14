@@ -99,5 +99,5 @@ gsvMenu = LayeredMenuAPI.LayeredMenu(
     onlyMatchWordStart=False
 )
 
-LayeredMenuAPI.RegisterLayeredMenu(gsvMenu, 'gsv')
+LayeredMenuAPI.RegisterLayeredMenu(gsvMenu, 'GSV')
 
